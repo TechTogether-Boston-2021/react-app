@@ -1,15 +1,20 @@
 import React from "react";
 
-function NewPost() {
+function NewPost({ onSubmit, onChange, value }) {
 	return (
 		<div className="px-6 py-4 text-gray-500">
 			<div className="border border-grey-400 p-2 rounded-md flex">
 				<div className="rounded-full bg-gray-600 overflow-hidden w-10 h-10">
 					image here
 				</div>
-				<form className="flex-grow border border-gray-400 ml-4 mr-2 rounded-md">
+				<form
+					onSubmit={onSubmit}
+					className="flex-grow border border-gray-400 ml-4 mr-2 rounded-md"
+				>
 					<input
 						type="text"
+						value={value}
+						onChange={(e) => onChange(e)}
 						className="p-2 px-3 text-sm block w-full rounded-md"
 						placeholder="Create a post"
 					/>

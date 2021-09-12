@@ -1,22 +1,28 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import NewPost from "./NewPost";
+import Post from "./Post";
 import "./styles.css";
 
 function App() {
 	const [data, setData] = useState([]);
+	const [newPost, setNewPost] = useState([]);
 
 	useEffect(() => {
 		(async function () {
 			const response = await fetch(`/api/messages`);
 			const json = await response.json();
-			setData(json.messages);
+			setData(json.messages.reverse());
 		})();
 	}, []);
 
+	const onChange = (e) => {
+		setNewPost(e.target.value);
+	};
+
 	const onSubmit = async () => {
 		const data = {
-			content: "hello world",
+			content: newPost,
 		};
 
 		const response = await fetch("/api/messages", {
@@ -33,19 +39,12 @@ function App() {
 
 	return (
 		<div>
+			{/* <NavBar /> */}
 			<Header />
-			<NewPost />
-			<div className="px-6 text-grey-400">
-				<div className="border border-grey-800 p-2 rounded-md">
-					<h5 className="text-gray-600 text-sm mb-1">
-						posted by: Jamie 5 hours ago
-					</h5>
-					<h2 className="text-xl mb-4">My first post</h2>
-					<div className="text-sm leading-6">
-						<p>Content here</p>
-					</div>
-				</div>
-			</div>
+			<NewPost value={newPost} onChange={onChange} onSubmit={onSubmit} />
+			{data.map((item) => {
+				return <Post content={item.content} />;
+			})}
 		</div>
 	);
 }
