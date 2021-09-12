@@ -11,10 +11,10 @@ mongoose.connect(
 
 const postSchema = new mongoose.Schema({
 	title: String,
-	content: String,
+	body: String,
 });
 
-const MessageModel = mongoose.model("message", messageSchema);
+const PostModel = mongoose.model("post", postSchema);
 
 module.exports = async function (context, req) {
 	context.res = {
@@ -24,35 +24,29 @@ module.exports = async function (context, req) {
 	};
 
 	switch (req.method) {
-		// If get, return all tasks
 		case "GET":
-			await getMessages(context);
+			await getPosts(context);
 			break;
-		// If post, create new task
 		case "POST":
-			await createMessage(context);
+			await createPost(context);
 			break;
-		// If put, update task
 		default:
 			break;
 	}
 };
 
-async function getMessages(context) {
-	// load all tasks from database
-	const messages = await MessageModel.find();
-	console.log("These are message", messages);
-	// return all tasks
-	context.res.body = { messages: messages };
+async function getPosts(context) {
+	const posts = await PostModel.find();
+	context.res.body = { posts: posts };
 }
 
-async function createMessage(context) {
+async function createPost(context) {
 	// Read the uploaded task
 	const body = context.req.body;
 	// Save to database
-	const message = await MessageModel.create(body);
+	const post = await PostModel.create(body);
 	// Set the HTTP status to created
 	context.res.status = 201;
 	// return new object
-	context.res.body = message;
+	context.res.body = post;
 }

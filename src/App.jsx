@@ -1,37 +1,44 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import NewPost from "./NewPost";
+import NewPostModal from "./NewPostModal";
 import Post from "./Post";
 import "./styles.css";
 
 function App() {
 	const [data, setData] = useState([]);
-	const [newPost, setNewPost] = useState([]);
+	const [title, setTitle] = useState("");
+	const [body, setBody] = useState("");
+	const [showModal, setShowModal] = useState(false);
 
 	useEffect(() => {
 		(async function () {
-			const response = await fetch(`/api/messages`);
+			const response = await fetch(`/api/posts`);
 			const json = await response.json();
-			setData(json.messages.reverse());
+			setData(json.posts.reverse());
 		})();
 	}, []);
 
-	const onChange = (e) => {
-		setNewPost(e.target.value);
-	};
+	const onSubmit = async (e) => {
+		setShowModal(false);
+		e.preventDefault();
+		setData([{ title: title, body: body }, ...data]);
 
-	const onSubmit = async () => {
-		const data = {
-			content: newPost,
+		const postObject = {
+			title: title,
+			body: body,
 		};
 
-		const response = await fetch("/api/messages", {
+		const response = await fetch("/api/posts", {
 			method: "POST", // POST to create new item
-			body: JSON.stringify(data), // Add task to body
+			body: JSON.stringify(postObject), // Add task to body
 			headers: {
 				"Content-Type": "application/json", // Set return type to JSON
 			},
 		});
+
+		setTitle("");
+		setBody("");
 
 		const message = await response.json();
 		console.log(message);
@@ -41,9 +48,20 @@ function App() {
 		<div>
 			{/* <NavBar /> */}
 			<Header />
-			<NewPost value={newPost} onChange={onChange} onSubmit={onSubmit} />
+			<NewPost setShowModal={setShowModal} />
+			{showModal && (
+				<NewPostModal
+					setTitle={setTitle}
+					setBody={setBody}
+					title={title}
+					body={body}
+					onSubmit={onSubmit}
+					setShowModal={setShowModal}
+				/>
+			)}
+
 			{data.map((item) => {
-				return <Post content={item.content} />;
+				return <Post title={item.title} content={item.body} />;
 			})}
 		</div>
 	);
