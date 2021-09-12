@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import Header from "./Header";
+import NewPost from "./NewPost";
+import "./styles.css";
 
 function App() {
 	const [data, setData] = useState([]);
@@ -29,15 +32,21 @@ function App() {
 	};
 
 	return (
-		<>
-			<div>Create a message</div>
-			<form onSubmit={onSubmit}>
-				<button type="submit">Submit</button>
-			</form>
-			{data.map((item) => {
-				return <div key={item.id}>{item.content}</div>;
-			})}
-		</>
+		<div>
+			<Header />
+			<NewPost />
+			<div className="px-6 text-grey-400">
+				<div className="border border-grey-800 p-2 rounded-md">
+					<h5 className="text-gray-600 text-sm mb-1">
+						posted by: Jamie 5 hours ago
+					</h5>
+					<h2 className="text-xl mb-4">My first post</h2>
+					<div className="text-sm leading-6">
+						<p>Content here</p>
+					</div>
+				</div>
+			</div>
+		</div>
 	);
 }
 
