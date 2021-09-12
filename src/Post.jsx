@@ -7,7 +7,9 @@ function Post({ title, content }) {
 				<h5 className="text-gray-600 text-sm mb-1">
 					posted by: Jamie 5 hours ago
 				</h5>
-				<h2 className="text-xl mb-4">{title}</h2>
+				<h2 style={{ fontFamily: "Montserrat" }} className="text-xl mb-4">
+					{title}
+				</h2>
 				<div className="text-sm leading-6">
 					<p>{content}</p>
 				</div>

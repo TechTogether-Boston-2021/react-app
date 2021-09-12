@@ -14,7 +14,9 @@ function NewPostModal({
 	return (
 		<div className="w-screen h-screen fixed top-0 left-0 z-20 flex ">
 			<div className="border border-grey-500 w-3/4 md:w-2/4 p-5 bg-white text-grey-900 self-center mx-auto rounded-md">
-				<h1 className="text-2xl mb-5">Create a post</h1>
+				<h1 className="text-2xl mb-5" style={{ fontFamily: "Montserrat" }}>
+					Create a post
+				</h1>
 				<Input
 					className={"w-full mb-3"}
 					placeholder={"Title"}
@@ -23,7 +25,7 @@ function NewPostModal({
 				/>
 				<TextArea
 					className={"w-full mb-3"}
-					placeholder={"Post text (you can use markdown)"}
+					placeholder={"Post body"}
 					onChange={(e) => setBody(e.target.value)}
 					value={body}
 				/>
@@ -34,7 +36,10 @@ function NewPostModal({
 					>
 						Cancel
 					</Button>
-					<Button onClick={(e) => onSubmit(e)} classNames={"px-4 py-2"}>
+					<Button
+						onClick={(e) => onSubmit(e)}
+						classNames={"px-4 py-2 bg-green-700 text-white"}
+					>
 						POST
 					</Button>
 				</div>

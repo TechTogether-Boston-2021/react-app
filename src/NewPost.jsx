@@ -1,11 +1,12 @@
 import React from "react";
+import profileAvatar from "./Profile_avatar_placeholder_large.png";
 
 function NewPost({ setShowModal }) {
 	return (
 		<div className="px-6 py-4 text-gray-500">
 			<div className="border border-grey-400 p-2 rounded-md flex">
 				<div className="rounded-full bg-gray-600 overflow-hidden w-10 h-10">
-					image here
+					<img src={profileAvatar} />
 				</div>
 				<form className="flex-grow border border-gray-400 ml-4 mr-2 rounded-md">
 					<input
